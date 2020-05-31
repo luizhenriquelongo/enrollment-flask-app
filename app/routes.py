@@ -1,44 +1,17 @@
+from flask import (
+    render_template,
+    request,
+    json,
+    Response,
+    redirect,
+    url_for,
+    flash
+)
+
 from app import app
-from flask import render_template, request, json, Response
-
-
-courses_data = [
-    {
-        "courseID": "1111",
-        "title": "PHP 101",
-        "description": "Intro to PHP",
-        "credits": 3,
-        "term": "Fall, Spring"
-    },
-    {
-        "courseID": "2222",
-        "title": "Java 1",
-        "description": "Intro to Java Programming",
-        "credits": 4,
-        "term": "Spring"
-    },
-    {
-        "courseID": "3333",
-        "title": "Adv PHP 201",
-        "description": "Advanced PHP Programming",
-        "credits": 3,
-        "term": "Fall"
-    },
-    {
-        "courseID": "4444",
-        "title": "Angular 1",
-        "description": "Intro to Angular",
-        "credits": 3,
-        "term": "Fall, Spring"
-    },
-    {
-        "courseID": "5555",
-        "title": "Java 2",
-        "description": "Advanced Java Programming",
-        "credits": 4,
-        "term": "Fall"
-    }
-]
+from app.models.user import User
+from app.forms.login import LoginForm
+from app.forms.register import RegisterForm
 
 
 @app.route('/')
@@ -47,9 +20,13 @@ def index():
     return render_template('index.html', index=True)
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html', login=True)
+    form = LoginForm()
+    if form.validate_on_submit():
+        flash("You are successfully logged in!", "success")
+        return redirect(url_for('index'))
+    return render_template('login.html', title="Login", form=form, login=True)
 
 
 @app.route('/courses')
@@ -57,7 +34,7 @@ def login():
 def courses(term="Spring 2019"):
     return render_template(
         'courses.html',
-        courses_data=courses_data,
+        courses_data='',
         courses=True,
         term=term
     )
@@ -65,10 +42,16 @@ def courses(term="Spring 2019"):
 
 @app.route('/register')
 def register():
-    return render_template('register.html', register=True)
+    form = RegisterForm()
+    return render_template(
+        'register.html',
+        title="Register",
+        form=form,
+        register=True
+    )
 
 
-@app.route('/enrollment', methods=["GET", "POST"])
+@app.route('/enrollment', methods=['GET', 'POST'])
 def enrollment():
     id = request.form.get('courseID')
     title = request.form.get('title')
@@ -82,6 +65,12 @@ def enrollment():
             "term": term
         }
     )
+
+
+@app.route('/user')
+def user():
+    users = User.objects.all()
+    return render_template("user.html", users=users)
 
 
 @app.route('/api/')
