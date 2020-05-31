@@ -23,16 +23,16 @@
             <!-- Construct the rest of courses here -->
             {% for course in courses_data %}
             <tr>
-                <td scope='row'>{{ course.get('courseID') }}</td>
-                <td>{{ course.get('title') }}</td>
-                <td>{{ course.get('description') }}</td>
-                <td>{{ course.get('credits') }}</td>
-                <td>{{ course.get('term') }}</td>
+                <td scope='row'>{{ course['courseID'] }}</td>
+                <td>{{ course['title'] }}</td>
+                <td>{{ course['description'] }}</td>
+                <td>{{ course['credits'] }}</td>
+                <td>{{ course['term'] }}</td>
                 <td>
                     <form action="{{ url_for('enrollment_bp.enrollment')}}" method="POST">
-                        <input type="hidden" name="courseID" value="{{ course.get('courseID') }}">
-                        <input type="hidden" name="title" value="{{ course.get('title') }}">
-                        <input type="hidden" name="term" value="{{ course.get('term') }}">
+                        <input type="hidden" name="courseID" value="{{ course['courseID'] }}">
+                        <input type="hidden" name="title" value="{{ course['title'] }}">
+                        <input type="hidden" name="term" value="{{ course['term'] }}">
                         <button>Enroll</button>
                     </form>
                 </td>
