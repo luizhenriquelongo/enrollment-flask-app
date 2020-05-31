@@ -6,7 +6,7 @@ from flask import (
     Blueprint
 )
 
-from app.forms.login import LoginForm
+from app.forms import LoginForm
 from app.models import User
 
 login_bp = Blueprint(

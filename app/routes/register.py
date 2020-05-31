@@ -6,7 +6,7 @@ from flask import (
     redirect,
 )
 
-from app.forms.register import RegisterForm
+from app.forms import RegisterForm
 from app.models import User
 
 register_bp = Blueprint(
