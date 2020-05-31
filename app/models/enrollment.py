@@ -1,5 +1,4 @@
-import flask
-from app import db
+from app.database import db
 
 from .user import User
 from .course import Course

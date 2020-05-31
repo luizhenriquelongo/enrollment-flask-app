@@ -29,7 +29,7 @@
                 <td>{{ course.get('credits') }}</td>
                 <td>{{ course.get('term') }}</td>
                 <td>
-                    <form action="{{ url_for('enrollment')}}" method="POST">
+                    <form action="{{ url_for('enrollment_bp.enrollment')}}" method="POST">
                         <input type="hidden" name="courseID" value="{{ course.get('courseID') }}">
                         <input type="hidden" name="title" value="{{ course.get('title') }}">
                         <input type="hidden" name="term" value="{{ course.get('term') }}">

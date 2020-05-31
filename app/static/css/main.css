@@ -13,6 +13,7 @@ body {
     height: 100%;
     position: relative;
     margin:0px;
+    padding: 0;
 }
 
 header {
@@ -63,8 +64,10 @@ input[type=text]:focus, input[type=password]:focus {
     background: #333;
     padding:5px;
     border-top:2px solid #0f0f0f;
-    /* position:absolute; */
-    bottom:0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 .container-term {
@@ -79,7 +82,9 @@ footer {
     color: white;
     padding: 5px;
     margin-top: 10px;
-    bottom: 0px;
+    position: fixed;
+    bottom: 0;
+
 }
 
 .btn-submit {

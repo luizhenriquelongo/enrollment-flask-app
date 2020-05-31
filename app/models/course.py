@@ -1,5 +1,5 @@
 import flask
-from app import db
+from app.database import db
 
 
 class Course(db.Document):
