@@ -104,3 +104,11 @@ footer {
 .error-message {
     color: red;
 }
+
+.user-flask {
+    float: right;
+    position: absolute;
+    font-size: 20px;
+    right: 10em;
+    top: 2em;
+}

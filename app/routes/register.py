@@ -4,6 +4,7 @@ from flask import (
     flash,
     url_for,
     redirect,
+    session,
 )
 
 from app.forms import RegisterForm
@@ -19,6 +20,9 @@ register_bp = Blueprint(
 
 @register_bp.route('/register', methods=['GET', 'POST'])
 def register():
+    if session.get('username'):
+        return redirect(url_for('index_bp.index'))
+
     form = RegisterForm()
     if form.validate_on_submit():
         user_data = {

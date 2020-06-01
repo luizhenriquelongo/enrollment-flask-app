@@ -1,11 +1,10 @@
 from flask import (
     render_template,
     request,
-    json,
-    Response,
     redirect,
     url_for,
     flash,
+    session,
     Blueprint
 )
 
@@ -22,8 +21,11 @@ enrollment_bp = Blueprint(
 
 @enrollment_bp.route('/enrollment', methods=['GET', 'POST'])
 def enrollment():
+    if not session.get('username'):
+        return redirect(url_for('login_bp.login'))
     courseID = request.form.get('courseID')
     courseTitle = request.form.get('title')
+    user_id = session.get('user_id')
 
     if courseID:
         if Enrollment.objects(user_id=user_id, courseID=courseID):
@@ -32,7 +34,7 @@ def enrollment():
                   "danger")
             return redirect(url_for('courses_bp.courses'))
        
-        Enrollment(user_id=user_id, courseID=courseID)
+        Enrollment(user_id=user_id, courseID=courseID).save()
         flash(f"You are enrolled in {courseTitle}!", "success")
 
     aggregation = [
@@ -71,7 +73,7 @@ def enrollment():
             }
         }
     ]
-    classes = [User.objects.aggregate(*aggregation)]
+    classes = list(User.objects.aggregate(*aggregation))
 
     return render_template(
         'enrollment.html',
