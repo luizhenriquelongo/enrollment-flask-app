@@ -1,9 +1,8 @@
 from flask import Flask
 
 from config import Config
-from app.routes import site
-from app.routes import api
-from app.config import start_database, start_api
+from app.routes import site, api
+from app.config import start_database
 
 
 app = Flask(__name__)
@@ -16,6 +15,6 @@ app.register_blueprint(site.enrollment_bp)
 app.register_blueprint(site.index_bp)
 app.register_blueprint(site.user_bp)
 app.register_blueprint(site.register_bp)
+app.register_blueprint(api.blueprint, url_prefix='/api/v1')
 
 start_database(app)
-start_api(app)

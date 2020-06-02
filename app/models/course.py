@@ -1,6 +1,4 @@
-import flask
-
-from app.database import db
+from app.config import db
 
 
 class Course(db.Document):
