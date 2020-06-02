@@ -1,9 +1,10 @@
 from flask import Flask
 
-from config import Config
 from app.database import db
 from app.website.routes import site_blueprints
-from app.api.v1 import api
+from app.api.v1 import api_v1
+from config import Config
+
 
 def create_app():
     app = Flask(
@@ -17,7 +18,8 @@ def create_app():
     for site_blueprint in site_blueprints:
         app.register_blueprint(site_blueprint)
     
-    api.init_app(app)
+    app.register_blueprint(api_v1)
+    
     db.init_app(app)
     
     return app
