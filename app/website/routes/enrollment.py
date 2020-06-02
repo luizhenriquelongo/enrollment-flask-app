@@ -8,15 +8,11 @@ from flask import (
     Blueprint
 )
 
-from app.models import Enrollment
-from app.models import User
+from app.database.models import Enrollment
+from app.database.models import User
 
-enrollment_bp = Blueprint(
-    'enrollment_bp',
-    __name__,
-    template_folder='templates',
-    static_folder='static'
-)
+
+enrollment_bp = Blueprint('enrollment_bp', __name__)
 
 
 @enrollment_bp.route('/enrollment', methods=['GET', 'POST'])
@@ -33,10 +29,11 @@ def enrollment():
                   {courseTitle}!",
                   "danger")
             return redirect(url_for('courses_bp.courses'))
-       
+
         Enrollment(user_id=user_id, courseID=courseID).save()
         flash(f"You are enrolled in {courseTitle}!", "success")
 
+    # TODO colocar isso no dao.py
     aggregation = [
         {
             '$lookup': {

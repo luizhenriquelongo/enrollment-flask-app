@@ -8,7 +8,7 @@ from wtforms.validators import (
     ValidationError
 )
 
-from app.models.user import User
+from app.database.models import User
 
 
 class RegisterForm(FlaskForm):

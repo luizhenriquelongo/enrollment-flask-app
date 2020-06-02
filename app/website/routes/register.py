@@ -7,15 +7,11 @@ from flask import (
     session,
 )
 
-from app.forms import RegisterForm
-from app.models import User
+from app.website.forms import RegisterForm
+from app.database.models import User
 
-register_bp = Blueprint(
-    'register_bp',
-    __name__,
-    template_folder='templates',
-    static_folder='static'
-)
+
+register_bp = Blueprint('register_bp', __name__)
 
 
 @register_bp.route('/register', methods=['GET', 'POST'])

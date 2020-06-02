@@ -1,20 +1,24 @@
 from flask import Flask
 
 from config import Config
-from app.routes import site, api
-from app.config import start_database
+from app.database.config import start_database
+from app.website.routes import site_blueprints
+from app.api.routes import api_blueprints
 
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    template_folder='website/templates',
+    static_folder='website/static'
+)
 app.config.from_object(Config)
 
-# Registering site routes
-app.register_blueprint(site.login_bp)
-app.register_blueprint(site.courses_bp)
-app.register_blueprint(site.enrollment_bp)
-app.register_blueprint(site.index_bp)
-app.register_blueprint(site.user_bp)
-app.register_blueprint(site.register_bp)
-app.register_blueprint(api.blueprint, url_prefix='/api/v1')
+# Registering website routes
+for site_blueprint in site_blueprints:
+    app.register_blueprint(site_blueprint)
+
+# Registering api routes
+for api_blueprint in api_blueprints:
+    app.register_blueprint(api_blueprint, url_prefix='/api/v1')
 
 start_database(app)

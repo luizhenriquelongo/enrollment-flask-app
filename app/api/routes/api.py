@@ -1,11 +1,11 @@
 from flask import Blueprint, jsonify
 from flask_restplus import Resource, Api
 
-from app.models import User
+from app.database.models import User
 
 
-blueprint = Blueprint('api', __name__)
-api = Api(blueprint)
+api_bp = Blueprint('api', __name__)
+api = Api(api_bp)
 
 
 @api.route('/user')

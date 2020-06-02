@@ -3,15 +3,10 @@ from flask import (
     Blueprint
 )
 
-from app.models.user import User
+from app.database.models.user import User
 
 
-user_bp = Blueprint(
-    'user_bp',
-    __name__,
-    template_folder='templates',
-    static_folder='static'
-)
+user_bp = Blueprint('user_bp', __name__)
 
 
 @user_bp.route('/user')

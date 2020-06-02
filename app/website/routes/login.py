@@ -7,15 +7,11 @@ from flask import (
     Blueprint,
 )
 
-from app.forms import LoginForm
-from app.models import User
+from app.website.forms import LoginForm
+from app.database.models import User
 
-login_bp = Blueprint(
-    'login_bp',
-    __name__,
-    template_folder='templates',
-    static_folder='static'
-)
+
+login_bp = Blueprint('login_bp', __name__)
 
 
 @login_bp.route('/login', methods=['GET', 'POST'])

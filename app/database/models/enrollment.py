@@ -1,6 +1,4 @@
-from app.config import db
-from app.models.user import User
-from app.models.course import Course
+from app.database.config import db
 
 
 class Enrollment(db.Document):

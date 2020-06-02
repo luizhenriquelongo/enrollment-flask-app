@@ -3,14 +3,10 @@ from flask import (
     Blueprint
 )
 
-from app.models.course import Course
+from app.database.models.course import Course
 
-courses_bp = Blueprint(
-    'courses_bp',
-    __name__,
-    template_folder='templates',
-    static_folder='static'
-)
+
+courses_bp = Blueprint('courses_bp', __name__)
 
 
 @courses_bp.route('/courses')
