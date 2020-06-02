@@ -13,13 +13,13 @@ def create_app():
         static_folder='website/static'
     )
     app.config.from_object(Config)
-    
+
     # Registering website routes
     for site_blueprint in site_blueprints:
         app.register_blueprint(site_blueprint)
-    
+
     app.register_blueprint(api_v1)
-    
+
     db.init_app(app)
-    
+
     return app
