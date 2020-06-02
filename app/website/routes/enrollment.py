@@ -9,7 +9,7 @@ from flask import (
 )
 
 from app.database.models import Enrollment
-from app.database.models import User
+from app.database.helpers import MongoDAO
 
 
 enrollment_bp = Blueprint('enrollment_bp', __name__)
@@ -33,44 +33,7 @@ def enrollment():
         Enrollment(user_id=user_id, courseID=courseID).save()
         flash(f"You are enrolled in {courseTitle}!", "success")
 
-    # TODO colocar isso no dao.py
-    aggregation = [
-        {
-            '$lookup': {
-                'from': 'enrollment', 
-                'localField': 'user_id', 
-                'foreignField': 'user_id', 
-                'as': 'r1'
-            }
-        }, {
-            '$unwind': {
-                'path': '$r1', 
-                'includeArrayIndex': 'r1_id', 
-                'preserveNullAndEmptyArrays': False
-            }
-        }, {
-            '$lookup': {
-                'from': 'course', 
-                'localField': 'r1.courseID', 
-                'foreignField': 'courseID', 
-                'as': 'r2'
-            }
-        }, {
-            '$unwind': {
-                'path': '$r2', 
-                'preserveNullAndEmptyArrays': False
-            }
-        }, {
-            '$match': {
-                'user_id': user_id
-            }
-        }, {
-            '$sort': {
-                'courseID': 1
-            }
-        }
-    ]
-    classes = list(User.objects.aggregate(*aggregation))
+    classes = MongoDAO.get_all_enrolled_classes(user_id)
 
     return render_template(
         'enrollment.html',

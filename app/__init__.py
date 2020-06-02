@@ -1,9 +1,9 @@
 from flask import Flask
 
 from config import Config
-from app.database.config import start_database
+from app.database import db
 from app.website.routes import site_blueprints
-from app.api.routes import api_blueprints
+from app.api.v1 import api
 
 
 app = Flask(
@@ -17,8 +17,5 @@ app.config.from_object(Config)
 for site_blueprint in site_blueprints:
     app.register_blueprint(site_blueprint)
 
-# Registering api routes
-for api_blueprint in api_blueprints:
-    app.register_blueprint(api_blueprint, url_prefix='/api/v1')
-
-start_database(app)
+api.init_app(app)
+db.init_app(app)

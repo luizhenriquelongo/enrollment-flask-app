@@ -1,4 +1,4 @@
-from app.database.config import db
+from app.database import db
 
 
 class Enrollment(db.Document):

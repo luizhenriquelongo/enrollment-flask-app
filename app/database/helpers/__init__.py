@@ -1,1 +1,1 @@
-from app.database.helpers.dao import Dao
+from app.database.helpers.mongo_dao import MongoDAO

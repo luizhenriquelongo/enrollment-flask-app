@@ -1,14 +1,13 @@
-from flask import Blueprint, jsonify
-from flask_restplus import Resource, Api
+from flask import jsonify
+from flask_restplus import Resource, Namespace
 
 from app.database.models import User
 
 
-api_bp = Blueprint('api', __name__)
-api = Api(api_bp)
+api = Namespace('users', description='Users related operations')
 
 
-@api.route('/user')
+@api.route('/')
 class GetAndPost(Resource):
 
     def get(self):
@@ -29,7 +28,7 @@ class GetAndPost(Resource):
         return jsonify(user)
 
 
-@api.route('/user/<id>')
+@api.route('/<id>')
 class GetUpdateDelete(Resource):
 
     def get(self, id):
