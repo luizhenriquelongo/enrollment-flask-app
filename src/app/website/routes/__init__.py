@@ -5,7 +5,7 @@ from app.website.routes.enrollment import enrollment_bp
 from app.website.routes.index import index_bp
 from app.website.routes.login import login_bp
 
-site_blueprints = [
+blueprints = [
     courses_bp,
     user_bp,
     register_bp,

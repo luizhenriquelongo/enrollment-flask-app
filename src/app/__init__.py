@@ -1,7 +1,9 @@
+from os import environ
+
 from flask import Flask
 
 from app.database import db
-from app.website.routes import site_blueprints
+from app.website.routes import blueprints
 from app.api.v1 import api_v1
 from config import Config
 
@@ -13,13 +15,12 @@ def create_app():
         static_folder='website/static'
     )
     app.config.from_object(Config)
+    db.init_app(app)
 
     # Registering website routes
-    for site_blueprint in site_blueprints:
-        app.register_blueprint(site_blueprint)
+    for blueprint in blueprints:
+        app.register_blueprint(blueprint)
 
     app.register_blueprint(api_v1)
-
-    db.init_app(app)
 
     return app
